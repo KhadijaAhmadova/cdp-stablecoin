@@ -1,66 +1,40 @@
-## Foundry
+# CDP Stablecoin
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+A DeFi protocol where users can deposit collateral in exchange for a decentralized stablecoin.
 
-Foundry consists of:
+The stablecoin  has exogenous collateral (ETH or WBTC). It attempts to maintain peg to the USD and it is algorithmically stable.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+The protocol uses [Chainlink Price Feeds](https://docs.chain.link/data-feeds) to get the real-time price of assets.
 
-## Documentation
+### Requirements
+- [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [foundry](https://getfoundry.sh/)
 
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
+### Installation
+```bash
+git clone https://github.com/KhadijaAhmadova/cdp-stablecoin
+cd cdp-stablecoin
 ```
-
-### Test
-
-```shell
-$ forge test
+To install dependencies run
+```bash
+make install
 ```
-
-### Format
-
-```shell
-$ forge fmt
+In `foundry.toml` add
+```bash
+remappings = [
+    "@chainlink/contracts/=lib/chainlink-brownie-contracts/contracts/",
+    "@openzeppelin/contracts=lib/openzeppelin-contracts/contracts",
+]
 ```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
+### Usage
+Start a local node and deploy.
+```bash
+make anvil
+make deploy
 ```
+`make deploy` will default to the local node.
 
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+To deploy to Ethereum Sepolia set SEPOLIA_RPC_URL and PRIVATE_KEY as environment variables.
+```bash
+make deploy ARGS="--network sepolia"
 ```
